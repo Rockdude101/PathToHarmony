@@ -1,16 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 public class PauseMenu : MonoBehaviour {
 
 	[SerializeField]
 	Canvas pauseCanvas;
+	[SerializeField]
+	private FadeOutTransition fade;
 
 	// Use this for initialization
 	void Start() {
 		pauseCanvas.enabled = false;
+	}
+
+	void Update() {
+		if (Input.GetButtonDown("Cancel")) {
+			if (pauseCanvas.enabled == false) {
+				showMenu();
+			} else {
+				resumeGame();
+			}
+		}
 	}
 
 	public void showMenu() {
@@ -23,7 +35,7 @@ public class PauseMenu : MonoBehaviour {
 
 	public void mainMenu() {
 		Persistence.saveProgress();
-		SceneManager.LoadScene("Title");
+		fade.fadeToScene("Title");
 	}
 
 	public void quitGame() {
